@@ -1,7 +1,7 @@
 'use client';
 
 import { QuestionsApi } from '@/api';
-import { Category, Paginated, UiState } from '@/types';
+import { Category, UiState } from '@/types';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import styles from './Categories.module.css';
@@ -14,7 +14,7 @@ type Props = {
 
 export default function Categories({ title }: Props) {
   const [uiState, setUiState] = useState<UiState>('initial');
-  const [categories, setCategories] = useState<Paginated<Category> | null>(
+  const [categories, setCategories] = useState<Array<Category> | null>(
     null,
   );
 
@@ -45,9 +45,9 @@ export default function Categories({ title }: Props) {
       {uiState === 'error' && <p>Villa við að sækja flokka</p>}
       {uiState === 'data' && (
         <ul>
-          {categories?.data.map((category, index) => (
-            <li key={index}>
-              <Link href={`/flokkar/${category.slug}`}>{category.name}</Link>
+          {categories?.map((category, id) => (
+            <li key={id}>
+              <Link href={`/flokkar/${category.slug}`}>{category.title}</Link>
             </li>
           ))}
         </ul>

@@ -3,6 +3,9 @@
 import { QuestionsApi } from '@/api';
 import { Category as CategoryType } from '@/types';
 import { useEffect, useState } from 'react';
+import NotFound from '../Errors/NotFound';
+import Questions from '../Questions/Questions';
+
 
 export function Category({ slug }: { slug: string }) {
   const [category, setCategory] = useState<CategoryType | null>(null);
@@ -17,8 +20,14 @@ export function Category({ slug }: { slug: string }) {
   }, [slug]);
 
   if (!category) {
-    return <p>Flokkur fannst ekki</p>;
+    return <NotFound/>;
   }
 
-  return <p>{JSON.stringify(category)}</p>;
+  return (
+    <div>
+      <h1>{category.title}</h1>
+      <p>Reyndu við spurningarnar!</p>
+      <Questions id={Number(category.id)}/>
+    </div>
+  )
 }
