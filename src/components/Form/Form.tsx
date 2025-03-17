@@ -54,6 +54,9 @@ export default function Form() {
     const api = new QuestionsApi();
     const response = await api.createQuestion(question);
 
+    if(typeof response === 'string'){
+        alert(response)
+    }
     if(!response){
         setUiState('error');
     }else {

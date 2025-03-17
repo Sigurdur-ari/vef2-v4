@@ -57,7 +57,7 @@ export class QuestionsApi {
     return response;
   }
 
-  async createQuestion(question: QuestionData): Promise<Question | null>{
+  async createQuestion(question: QuestionData): Promise<Question | null | string>{
     const url = BASE_URL + `/questions`;
 
     try{
@@ -69,6 +69,24 @@ export class QuestionsApi {
         body: JSON.stringify(question)
       });
 
+      //Aðstoð við villumeðhöndlun fengin frá ChatGPT
+      if(response.status === 400){
+        //túlka villuna sem json þar sem API skilar json villum fyrir 400 status
+        const errorResponse = await response.json();
+
+        const errorMessage = errorResponse.error || 'Unknown error occurred';
+        const fieldErrors = errorResponse.errors?.fieldErrors || {};
+
+        //Túlka allar fieldError villur til að birta allt sem var að
+        for (const field in fieldErrors) {
+          if (fieldErrors[field].length > 0) {
+            console.error(`${field}: ${fieldErrors[field].join(', ')}`);
+          }
+        }
+        //skila streng af villum. 
+        return `${errorMessage}: ${JSON.stringify(fieldErrors)}`;
+      }
+
       if(!response.ok){
         console.error("Failed to create question ", response.statusText);
       }
@@ -76,7 +94,7 @@ export class QuestionsApi {
       return await response.json();
 
     }catch(e){
-      console.error("Error creatign question ", e);
+      console.error("Error creating question ", e);
       return null; 
     }
   }
