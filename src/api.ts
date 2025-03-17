@@ -1,4 +1,4 @@
-import { Category, Question } from './types';
+import { Category, Question, QuestionData } from './types';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:8000';
 
@@ -55,5 +55,29 @@ export class QuestionsApi {
     //TODO sama mögulega hér. 
 
     return response;
+  }
+
+  async createQuestion(question: QuestionData): Promise<Question | null>{
+    const url = BASE_URL + `/questions`;
+
+    try{
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(question)
+      });
+
+      if(!response.ok){
+        console.error("Failed to create question ", response.statusText);
+      }
+
+      return await response.json();
+
+    }catch(e){
+      console.error("Error creatign question ", e);
+      return null; 
+    }
   }
 }

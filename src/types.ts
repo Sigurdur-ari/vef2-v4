@@ -22,9 +22,20 @@ export type Answer = {
   q_id: number
 };
 
+export type AnswerData = {
+  text: string;
+  correct: boolean;
+};
+
 export type Question = {
   id: number;
   text: string;
   answers: Answer[];
+  cat_id: number;
+};
+
+export type QuestionData = {
+  text: string;
+  answers: AnswerData[];
   cat_id: number;
 };
