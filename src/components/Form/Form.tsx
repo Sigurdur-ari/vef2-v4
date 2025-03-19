@@ -93,33 +93,33 @@ export default function Form() {
 
             {answers.map((answer, index) => (
                 <div key={index}>
-                <input
-                    type="text"
-                    value={answer.text}
-                    onChange={(e) => {
-                    const newAnswers = [...answers];
-                    newAnswers[index].text = e.target.value;
-                    setAnswers(newAnswers);
-                    }}
-                />
-                <input
-                    type="radio"
-                    checked={correctAnswer === index}
-                    onChange={() => setCorrectAnswer(index)}
-                />
-                <button
-                    type="button"
-                    onClick={() => {
-                        if(answers.length === 2){
-                            alert("Spurning verður að hafa amk 2 svör")
-                        }else{
-                            const newAnswers = answers.filter((ans, i) => i !== index);
+                    <input
+                        type="text"
+                        value={answer.text}
+                        onChange={(e) => {
+                            const newAnswers = [...answers];
+                            newAnswers[index].text = e.target.value;
                             setAnswers(newAnswers);
-                            if (correctAnswer === index) setCorrectAnswer(null);
-                        }
-                    }}
-                    >
-                    Eyða svari!
+                        }}
+                    />
+                    <input
+                        type="radio"
+                        checked={correctAnswer === index}
+                        onChange={() => setCorrectAnswer(index)}
+                    />
+                    <button
+                        type="button"
+                        onClick={() => {
+                            if(answers.length === 2){
+                                alert("Spurning verður að hafa amk 2 svör")
+                            }else{
+                                const newAnswers = answers.filter((ans, i) => i !== index);
+                                setAnswers(newAnswers);
+                                if (correctAnswer === index) setCorrectAnswer(null);
+                            }
+                        }}
+                        >
+                        Eyða svari!
                     </button>
                 </div>
             ))}

@@ -5,6 +5,7 @@ import { Category as CategoryType } from '@/types';
 import { useEffect, useState } from 'react';
 import NotFound from '../Errors/NotFound';
 import Questions from '../Questions/Questions';
+import styles from './Category.module.css';
 
 
 export function Category({ slug }: { slug: string }) {
@@ -24,7 +25,7 @@ export function Category({ slug }: { slug: string }) {
   }
 
   return (
-    <div>
+    <div className={styles.content}>
       <h1>{category.title}</h1>
       <p>Reyndu við spurningarnar!</p>
       <Questions id={Number(category.id)}/>
