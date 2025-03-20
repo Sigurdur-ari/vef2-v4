@@ -1,8 +1,8 @@
 'use client';
 
 import { QuestionsApi } from '@/api';
-import { Answer, Question, UiState } from '@/types';
-import { ButtonHTMLAttributes, useEffect, useState } from 'react';
+import { Question, UiState } from '@/types';
+import { useEffect, useState } from 'react';
 import styles from './Questions.module.css';
 
 type Props = {
@@ -51,7 +51,7 @@ export default function Questions({ id }: Props) {
       setResults({...results, [qid]: false})
     }
     setAnsweredQuestions({...answeredQuestions, [qid]: true})
-    // @ts-ignore
+    // @ts-expect-error ts skilur ekki týpuna en virkar samt vel
     event.target.disabled = true; 
   }
 
@@ -60,6 +60,7 @@ export default function Questions({ id }: Props) {
   }
 
 
+  //Smá messy en virkar, væri hægt að búa til fleiri componenta en það er mikið að gera. 
   return (
     <div className={styles.questions}>
         {uiState === 'loading' && <p>Sæki spurningar</p>}

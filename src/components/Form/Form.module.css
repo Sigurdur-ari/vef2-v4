@@ -1,0 +1,36 @@
+.formContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    justify-content: center;
+    align-items: center;
+
+    margin-top: 1rem;
+
+    max-width: 1000px;
+
+}
+
+
+.answer{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    margin-bottom: none;
+}
+
+.lab4inp{
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+}
+
+.submitBtn{
+    padding: 1rem;
+}

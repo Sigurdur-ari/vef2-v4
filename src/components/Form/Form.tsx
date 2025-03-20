@@ -3,6 +3,7 @@
 import { QuestionsApi } from '@/api';
 import { AnswerData, Category, QuestionData, UiState } from '@/types';
 import { useEffect, useState } from 'react';
+import styles from './Form.module.css';
 
 export default function Form() {
   const [uiState, setUiState] = useState<UiState>('empty');
@@ -17,7 +18,7 @@ export default function Form() {
 
   useEffect(() => {
     async function fetchCategories() {
-      setUiState('loading');
+      setUiState('empty');
 
       const api = new QuestionsApi();
       const categoriesResponse = await api.getCategories();
@@ -70,18 +71,18 @@ export default function Form() {
 
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className={styles.formContainer}>
         {uiState === 'empty' && <p>Sækir upplýsingar</p>}
         {uiState === 'loading' && <p>býr til spurninguna</p>}
         {uiState === 'error' && <p>Villa við að bæta spurningu við!</p>}
         {uiState === 'data' && (
             <>
-            <label>
+            <label className={styles.lab4inp}>
                 Spurning:
                 <input type="text" value={questionText} onChange={(e) => setQuestionText(e.target.value)} />
             </label>
 
-            <label>
+            <label className={styles.lab4inp}>
                 Flokkur:
                 <select value={category ?? ''} onChange={(e) => setCategory(Number(e.target.value))}>
                 <option value="" disabled>Veldu flokk fyrir spurninguna</option>
@@ -92,21 +93,27 @@ export default function Form() {
             </label>
 
             {answers.map((answer, index) => (
-                <div key={index}>
-                    <input
-                        type="text"
-                        value={answer.text}
-                        onChange={(e) => {
-                            const newAnswers = [...answers];
-                            newAnswers[index].text = e.target.value;
-                            setAnswers(newAnswers);
-                        }}
-                    />
-                    <input
-                        type="radio"
-                        checked={correctAnswer === index}
-                        onChange={() => setCorrectAnswer(index)}
-                    />
+                <div key={index} className={styles.answer}>
+                    <label className={styles.lab4inp}>
+                        Svar: {index+1}
+                        <input
+                            type="text"
+                            value={answer.text}
+                            onChange={(e) => {
+                                const newAnswers = [...answers];
+                                newAnswers[index].text = e.target.value;
+                                setAnswers(newAnswers);
+                            }}
+                        />
+                    </label>
+                    <label className={styles.lab4inp}>
+                        Rétt svar?
+                        <input
+                            type="radio"
+                            checked={correctAnswer === index}
+                            onChange={() => setCorrectAnswer(index)}
+                        />
+                    </label>
                     <button
                         type="button"
                         onClick={() => {
@@ -134,7 +141,7 @@ export default function Form() {
                 Bæta við svari!
             </button>
 
-            <button type="submit">Submit</button>
+            <button type="submit" className={styles.submitBtn}>Búa til spurningu</button>
             </>
         )}
     </form>
